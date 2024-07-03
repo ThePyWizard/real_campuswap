@@ -8,16 +8,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 //import 'pages/login_page.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
     ChangeNotifierProvider(
-      create: (context) => AuthService(),
-      child: const MyApp()
-    ),
+        create: (context) => AuthService(), child: const MyApp()),
   );
 }
 
