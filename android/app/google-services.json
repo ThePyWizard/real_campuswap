@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "755286485696",
+    "project_id": "ecommerceapp-7d86d",
+    "storage_bucket": "ecommerceapp-7d86d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755286485696:android:5e05d0c117a8db17c21b25",
+        "android_client_info": {
+          "package_name": "com.example.campuswap_my_version"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755286485696-390pm3a7abin1648i7ke2rcqrccopi63.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.campuswap_my_version",
+            "certificate_hash": "6a161274f8c3adda895720713bedbd61f33e7ea9"
+          }
+        },
+        {
+          "client_id": "755286485696-7qijf5cqagu5j97c7ptrofic88rqjk61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiDwlj8E4EBibhP3Z0OqbdkEHsL5zyYC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755286485696-7qijf5cqagu5j97c7ptrofic88rqjk61.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "755286485696-nn5ls4dffps5e3f3kfdo45k59f7fied6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.campuswapMyVersion"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:755286485696:android:59f78a3bced58a9fc21b25",
+        "android_client_info": {
+          "package_name": "com.example.chatapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "755286485696-7qijf5cqagu5j97c7ptrofic88rqjk61.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCiDwlj8E4EBibhP3Z0OqbdkEHsL5zyYC8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "755286485696-7qijf5cqagu5j97c7ptrofic88rqjk61.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "755286485696-nn5ls4dffps5e3f3kfdo45k59f7fied6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.campuswapMyVersion"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
