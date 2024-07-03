@@ -1,5 +1,8 @@
 //import 'package:chatapp/pages/register_page.dart';
 import 'package:chatapp/firebase_options.dart';
+import 'package:chatapp/pages/chat_page.dart';
+import 'package:chatapp/pages/home_page.dart';
+import 'package:chatapp/pages/sell_page.dart';
 import 'package:chatapp/services/auth/auth_gate.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
 //import 'package:chatapp/services/auth/login_or_register.dart';
@@ -28,7 +31,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: AuthGate(),
+      routes: {
+        '/home':(context) => HomePage(),
+        '/sell': (context) => SellPage()
+      },
+      home: SellPage(),
     );
   }
 }
