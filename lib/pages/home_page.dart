@@ -1,3 +1,4 @@
+import 'package:chatapp/components/bottom_nav.dart';
 import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Scaffold(
       body: Text("Home Page"),
-      bottomNavigationBar: ,
+      bottomNavigationBar: BottomNav(),
     );
   }
 }

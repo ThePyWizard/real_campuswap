@@ -7,14 +7,16 @@ import 'package:provider/provider.dart';
 import 'package:chatapp/components/my_button2.dart';
 import 'package:chatapp/components/my_button3.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+import '../components/bottom_nav.dart';
+
+class ReqPage extends StatefulWidget {
+  const ReqPage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<ReqPage> createState() => _ReqPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _ReqPageState extends State<ReqPage> {
   // Instance of auth
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -38,6 +40,7 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: _buildRequestList(),
+      bottomNavigationBar: BottomNav(),
     );
   }
 
@@ -87,12 +90,14 @@ class _HomePageState extends State<HomePage> {
                     if (userSnapshot.hasError) {
                       return const Text('Error');
                     }
-                    if (userSnapshot.connectionState == ConnectionState.waiting) {
+                    if (userSnapshot.connectionState ==
+                        ConnectionState.waiting) {
                       return const Text('Loading...');
                     }
 
                     final userDoc = userSnapshot.data!;
-                    final pricePropose = double.tryParse(request['price_propose']) ?? 0.0;
+                    final pricePropose =
+                        double.tryParse(request['price_propose']) ?? 0.0;
                     return _buildUserListItem(userDoc, pricePropose);
                   },
                 );

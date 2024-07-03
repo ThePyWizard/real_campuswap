@@ -1,8 +1,11 @@
+import 'package:chatapp/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../components/bottom_nav.dart';
 
 class SellPage extends StatefulWidget {
   const SellPage({super.key});
@@ -12,6 +15,8 @@ class SellPage extends StatefulWidget {
 }
 
 class _SellPageState extends State<SellPage> {
+
+  // Controllers here
   String? productImageUrl;
 
   bool isUploading = false;
@@ -63,23 +68,18 @@ class _SellPageState extends State<SellPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(top: 200),
+        padding: EdgeInsets.all(TSizes.lg),
         child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                InkWell(onTap: pickImage, child: Icon(Icons.upload)),
-                InkWell(onTap: captureImage, child: Icon(Icons.camera_alt)),
-              ],
+          children: [ 
+            TextField(
+              
             ),
-            Image.network(
-              productImageUrl??"https://lh3.googleusercontent.com/ogw/AF2bZyiFN7Ry1ZR6w2OOh8G011f_u8sFmgMpROxVFe00Bhy03bE=s32-c-mo"
-            ),
-            Text(productImageUrl??"link illa")
+            TextField(),
+            TextField(),
           ],
         ),
       ),
+      bottomNavigationBar: BottomNav(),
     );
   }
 }
