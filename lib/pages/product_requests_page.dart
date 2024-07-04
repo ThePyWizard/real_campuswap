@@ -42,7 +42,7 @@ class _ReqPageState extends State<ReqPage> {
           stream: _auth.authStateChanges(),
           builder: (context, snapshot) {
             if (snapshot.hasData) {
-              return Text("Hi, ${snapshot.data!.email}");
+              return Text("Hi, ${snapshot.data!.email?.split('@')[0]}");
             } else {
               return const Text("Product Requests");
             }
@@ -234,7 +234,7 @@ class _ReqPageState extends State<ReqPage> {
         ),
       ),
       title: Text(
-        data['email'],
+        data['userName'],
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black,
@@ -242,7 +242,7 @@ class _ReqPageState extends State<ReqPage> {
       ),
       subtitle: Text(
         isSeller
-            ? "I'd buy it for $pricePropose dollars"
+            ? "I'd buy it for $pricePropose INR"
             : "Have a chat with the seller",
         style: const TextStyle(
           color: Colors.grey,
