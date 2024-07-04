@@ -11,6 +11,7 @@ import 'package:chatapp/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
+import 'package:chatapp/pages/profile_page.dart';
 //import 'pages/login_page.dart';
 
 void main() async {
@@ -32,10 +33,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       routes: {
-        '/home':(context) => HomePage(),
+        '/home': (context) => HomePage(),
         '/sell': (context) => SellPage(),
-        '/req':(context) => ReqPage(),
-        '/auth':(context) => AuthGate(),
+        '/req': (context) => ReqPage(),
+        '/auth': (context) => AuthGate(),
+        '/profile': (context) => ProfilePage(),
       },
       initialRoute: '/auth',
     );

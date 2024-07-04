@@ -32,6 +32,10 @@ class BottomNav extends StatelessWidget {
           icon: Icon(Icons.sell),
           label: "Sell",
         ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: "Profile",
+        ),
       ],
     );
   }

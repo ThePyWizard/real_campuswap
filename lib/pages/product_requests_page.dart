@@ -89,7 +89,7 @@ class _ReqPageState extends State<ReqPage> {
         currentIndex: 1,
         onTap: (index) {
           if (index != 1) {
-            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell'][index]);
+            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell','/profile'][index]);
           }
         },
       ),

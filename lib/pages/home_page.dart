@@ -120,7 +120,7 @@ class HomePage extends StatelessWidget {
         currentIndex: 0,
         onTap: (index) {
           if (index != 0) {
-            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell'][index]);
+            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell','/profile'][index]);
           }
         },
       ),

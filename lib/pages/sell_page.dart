@@ -143,7 +143,7 @@ class _SellPageState extends State<SellPage> {
         currentIndex: 2,
         onTap: (index) {
           if (index != 2) {
-            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell'][index]);
+            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell','/profile'][index]);
           }
         },
       ),
