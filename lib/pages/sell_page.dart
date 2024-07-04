@@ -139,7 +139,14 @@ class _SellPageState extends State<SellPage> {
           ],
         ),
       ),
-      bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: BottomNav(
+        currentIndex: 2,
+        onTap: (index) {
+          if (index != 2) {
+            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell'][index]);
+          }
+        },
+      ),
     );
   }
 }

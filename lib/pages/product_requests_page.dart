@@ -85,7 +85,14 @@ class _ReqPageState extends State<ReqPage> {
           ),
         ],
       ),
-      bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: BottomNav(
+        currentIndex: 1,
+        onTap: (index) {
+          if (index != 1) {
+            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell'][index]);
+          }
+        },
+      ),
     );
   }
 

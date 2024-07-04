@@ -20,6 +20,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: AppBar(
         title: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
@@ -114,7 +115,15 @@ class HomePage extends StatelessWidget {
           );
         },
       ),
-      bottomNavigationBar: BottomNav(),
+      //bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: BottomNav(
+        currentIndex: 0,
+        onTap: (index) {
+          if (index != 0) {
+            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell'][index]);
+          }
+        },
+      ),
     );
   }
 }

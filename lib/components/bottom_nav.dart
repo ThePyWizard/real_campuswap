@@ -1,34 +1,24 @@
 import 'package:flutter/material.dart';
 
-class BottomNav extends StatefulWidget {
-  const BottomNav({super.key});
+class BottomNav extends StatelessWidget {
+  final int currentIndex;
+  final Function(int) onTap;
 
-  @override
-  State<BottomNav> createState() => _BottomNavState();
-}
-
-class _BottomNavState extends State<BottomNav> {
-  int _selectedIndex = 0;
-  static const List<String> _route = ['/home', '/req', '/sell'];
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-    Navigator.pushReplacementNamed(context, _route[index]);
-  }
+  const BottomNav({
+    Key? key,
+    required this.currentIndex,
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      currentIndex: _selectedIndex,
-      onTap: _onItemTapped,
-      selectedItemColor: Colors.red, // Change this to your desired color
-      unselectedItemColor: Colors.grey, // Change this to your desired color
-      selectedIconTheme: IconThemeData(
-          color: Colors.red), // Change this to your desired color
-      unselectedIconTheme: IconThemeData(
-          color: Colors.grey), // Change this to your desired color
+      currentIndex: currentIndex,
+      onTap: onTap,
+      selectedItemColor: Colors.red,
+      unselectedItemColor: Colors.grey,
+      selectedIconTheme: IconThemeData(color: Colors.red),
+      unselectedIconTheme: IconThemeData(color: Colors.grey),
       items: const [
         BottomNavigationBarItem(
           icon: Icon(Icons.home),
