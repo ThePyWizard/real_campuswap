@@ -1,5 +1,6 @@
 import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/services/auth/auth_service.dart';
+import 'package:chatapp/services/auth/login_or_register.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,17 +21,30 @@ class _ReqPageState extends State<ReqPage> {
   // Instance of auth
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  void signOut() {
+  void signOut() async {
     // Sign out code
     final authService = Provider.of<AuthService>(context, listen: false);
-    authService.signOut();
+    await authService.signOut();
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const LoginOrRegister()),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Home Page"),
+        title: StreamBuilder<User?>(
+          stream: _auth.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return Text("Hi, ${snapshot.data!.email}");
+            } else {
+              return const Text("Product Requests");
+            }
+          },
+        ),
         actions: [
           // Sign out button
           IconButton(
@@ -40,7 +54,7 @@ class _ReqPageState extends State<ReqPage> {
         ],
       ),
       body: _buildRequestList(),
-      bottomNavigationBar: BottomNav(),
+      bottomNavigationBar: const BottomNav(),
     );
   }
 
@@ -56,11 +70,16 @@ class _ReqPageState extends State<ReqPage> {
           return const Text('Error');
         }
         if (productSnapshot.connectionState == ConnectionState.waiting) {
-          return const Text('Loading...');
+          return const Center(child: CircularProgressIndicator());
         }
 
-        final productIds =
-            productSnapshot.data!.docs.map((doc) => doc['productId']).toList();
+        final productDocs = productSnapshot.data!.docs;
+        if (productDocs.isEmpty) {
+          return const Center(child: Text('No products found'));
+        }
+
+        final productIds = productDocs.map((doc) => doc['productId']).toList();
+        print(productIds);
 
         return StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
@@ -72,10 +91,14 @@ class _ReqPageState extends State<ReqPage> {
               return const Text('Error');
             }
             if (requestSnapshot.connectionState == ConnectionState.waiting) {
-              return const Text('Loading...');
+              return const Center(child: CircularProgressIndicator());
             }
 
             final requests = requestSnapshot.data!.docs;
+            print(requests);
+            if (requests.isEmpty) {
+              return const Center(child: Text('No requests found'));
+            }
 
             return ListView.builder(
               itemCount: requests.length,
@@ -97,8 +120,10 @@ class _ReqPageState extends State<ReqPage> {
 
                     final userDoc = userSnapshot.data!;
                     final pricePropose =
-                        double.tryParse(request['price_propose']) ?? 0.0;
-                    return _buildUserListItem(userDoc, pricePropose);
+                        double.tryParse(request['price_propose'].toString()) ??
+                            0.0;
+                    return _buildUserListItem(
+                        userDoc, pricePropose, request['productId']);
                   },
                 );
               },
@@ -110,7 +135,8 @@ class _ReqPageState extends State<ReqPage> {
   }
 
   // Build individual user list item
-  Widget _buildUserListItem(DocumentSnapshot document, double pricePropose) {
+  Widget _buildUserListItem(
+      DocumentSnapshot document, double pricePropose, String productId) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
 
     return ListTile(
@@ -123,14 +149,14 @@ class _ReqPageState extends State<ReqPage> {
       ),
       title: Text(
         data['email'],
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           color: Colors.black,
         ),
       ),
       subtitle: Text(
         "I'd buy it for $pricePropose dollars",
-        style: TextStyle(
+        style: const TextStyle(
           color: Colors.grey,
         ),
       ),
@@ -154,18 +180,21 @@ class _ReqPageState extends State<ReqPage> {
               },
             ),
           ),
-          SizedBox(width: 8), // Add some spacing between buttons
+          const SizedBox(width: 8), // Add some spacing between buttons
           SizedBox(
             width: 80, // Adjust the width as needed
             child: MyRejectButton(
-              text: '',
-              onTap: () {},
+              text: 'Reject',
+              onTap: () {
+                // Add reject functionality if needed
+              },
             ),
           ),
         ],
       ),
       tileColor: Colors.grey[200],
-      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      contentPadding:
+          const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),

@@ -1,6 +1,6 @@
 //import 'package:chatapp/pages/register_page.dart';
 import 'package:chatapp/firebase_options.dart';
-import 'package:chatapp/pages/chat_page.dart';
+//import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/pages/home_page.dart';
 import 'package:chatapp/pages/product_requests_page.dart';
 import 'package:chatapp/pages/sell_page.dart';
@@ -33,9 +33,10 @@ class MyApp extends StatelessWidget {
       routes: {
         '/home':(context) => HomePage(),
         '/sell': (context) => SellPage(),
-        '/req':(context) => ReqPage()
+        '/req':(context) => ReqPage(),
+        '/auth':(context) => AuthGate(),
       },
-      home: AuthGate(),
+      initialRoute: '/auth',
     );
   }
 }
