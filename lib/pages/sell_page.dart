@@ -72,7 +72,15 @@ class _SellPageState extends State<SellPage> {
         padding: EdgeInsets.all(TSizes.lg),
         child: Column(
           children: [
-            const SizedBox(height: TSizes.productImageHeight),
+                        const SizedBox(height: TSizes.productImageHeight),
+
+            const Text("Heading",
+
+                      style: TextStyle(
+                          fontSize: 40,
+                          decoration: TextDecoration.none,
+                          color: Colors.black)),
+            const SizedBox(height: TSizes.defaultSpace),
             TRoundedContainer(
               child: TextField(
                 controller: productNameController,

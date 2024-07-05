@@ -34,6 +34,8 @@ class _productDetailsState extends State<productDetails> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  
+                  const SizedBox(height: 20),
                   const Text("Product Detail",
                       style: TextStyle(
                           fontSize: 40,
@@ -53,7 +55,7 @@ class _productDetailsState extends State<productDetails> {
                   const SizedBox(height: 20),
                   const SizedBox(height: 20),
                   Text(
-                    "productName: ${widget.productName}",
+                    "${widget.productName}",
                     style: const TextStyle(
                       fontSize: 20,
                       decoration: TextDecoration.none,
@@ -62,7 +64,7 @@ class _productDetailsState extends State<productDetails> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "productDescription: $productDetails",
+                    "Description: $productDetails",
                     style: const TextStyle(
                       fontSize: 20,
                       decoration: TextDecoration.none,
@@ -71,7 +73,7 @@ class _productDetailsState extends State<productDetails> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "productPrice:   ${widget.productPrice}",
+                    "Price:   ${widget.productPrice}",
                     style: const TextStyle(
                       fontSize: 20,
                       decoration: TextDecoration.none,
