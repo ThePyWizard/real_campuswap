@@ -1,7 +1,10 @@
 import 'package:chatapp/components/bottom_nav.dart';
+import 'package:chatapp/services/auth/auth_service.dart';
+import 'package:chatapp/services/auth/login_or_register.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -70,8 +73,12 @@ class ProfilePage extends StatelessWidget {
                     const SizedBox(height: 16),
                     TextButton(
                       onPressed: () async {
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.of(context).pushReplacementNamed('/login');
+                        final authService = Provider.of<AuthService>(context, listen: false);
+                          await authService.signOut();
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LoginOrRegister()),
+                          );
                       },
                       child: const Text('Sign Out'),
                     ),

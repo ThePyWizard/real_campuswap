@@ -1,5 +1,5 @@
 //import 'package:chatapp/pages/register_page.dart';
-import 'package:chatapp/components/bottom_nav.dart';
+//import 'package:chatapp/components/bottom_nav.dart';
 import 'package:chatapp/firebase_options.dart';
 //import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/pages/home_page.dart';
