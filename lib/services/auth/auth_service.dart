@@ -29,7 +29,7 @@ class AuthService extends ChangeNotifier {
 
   //create a new user
   Future<UserCredential> signUpWithEmailandPassword(
-      String email, password, campus,username) async {
+      String email, password, username,campus) async {
     try {
       //create user
       UserCredential userCredential = await _firebaseAuth
