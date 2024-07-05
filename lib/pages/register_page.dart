@@ -53,73 +53,75 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[300],
-      body: SafeArea(
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                //logo
-                Icon(
-                  Icons.message,
-                  size: 60,
-                ),
-                const Text(
-                  'Lets create an account for you',
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 20),
-                MyTextField(
-                    controller: usernameController,
-                    hintText: "Username",
-                    obscureText: false),
-                const SizedBox(height: 10),
-                MyTextField(
-                    controller: emailController,
-                    hintText: "Email",
-                    obscureText: false),
-                const SizedBox(height: 10),
-                MyTextField(
-                    controller: passwordController,
-                    hintText: "Password",
-                    obscureText: true),
-                const SizedBox(height: 10),
-                MyTextField(
-                    controller: confirmPasswordController,
-                    hintText: "Confirm Password",
-                    obscureText: true),
-                const SizedBox(height: 10),
-                MyTextField(
-                    controller: campusController,
-                    hintText: "Enter Campus",
-                    obscureText: false),
-                const SizedBox(height: 10),
-                MyButton(
-                  onTap: signUp,
-                  text: "Sign Up",
-                ),
-                const SizedBox(height: 50),
-
-                //not a member
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Already a member?"),
-                    const SizedBox(width: 5),
-                    GestureDetector(
-                      onTap: widget.onTap,
-                      child: const Text(
-                        "Login Now",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //logo
+                  Icon(
+                    Icons.message,
+                    size: 60,
+                  ),
+                  const Text(
+                    'Lets create an account for you',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  const SizedBox(height: 20),
+                  MyTextField(
+                      controller: usernameController,
+                      hintText: "Username",
+                      obscureText: false),
+                  const SizedBox(height: 10),
+                  MyTextField(
+                      controller: emailController,
+                      hintText: "Email",
+                      obscureText: false),
+                  const SizedBox(height: 10),
+                  MyTextField(
+                      controller: passwordController,
+                      hintText: "Password",
+                      obscureText: true),
+                  const SizedBox(height: 10),
+                  MyTextField(
+                      controller: confirmPasswordController,
+                      hintText: "Confirm Password",
+                      obscureText: true),
+                  const SizedBox(height: 10),
+                  MyTextField(
+                      controller: campusController,
+                      hintText: "Enter Campus",
+                      obscureText: false),
+                  const SizedBox(height: 10),
+                  MyButton(
+                    onTap: signUp,
+                    text: "Sign Up",
+                  ),
+                  const SizedBox(height: 50),
+            
+                  //not a member
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Already a member?"),
+                      const SizedBox(width: 5),
+                      GestureDetector(
+                        onTap: widget.onTap,
+                        child: const Text(
+                          "Login Now",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
