@@ -81,6 +81,7 @@ class HomePage extends StatelessWidget {
                         productDescription: snapshot.data!.docs[index]['productDescription'],
                         productPrice: snapshot.data!.docs[index]['productPrice'],
                         productImage: snapshot.data!.docs[index]['productImage'],
+                        sellerId: snapshot.data!.docs[index]['uid'],
                       ),
                     ),
                   );

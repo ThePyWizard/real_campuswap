@@ -12,8 +12,15 @@ class productDetails extends StatefulWidget {
   final String? productDescription;
   final String? productPrice;
   final String? productImage;
-  
-  const productDetails({super.key, this.productName, this.productDescription, this.productPrice, this.productImage});
+  final String? sellerId;
+
+  const productDetails(
+      {super.key,
+      this.productName,
+      this.productDescription,
+      this.productPrice,
+      this.productImage,
+      this.sellerId});
 
   @override
   State<productDetails> createState() => _productDetailsState();
@@ -23,8 +30,7 @@ class _productDetailsState extends State<productDetails> {
   final TextEditingController controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    
-    return  Scaffold(
+    return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
@@ -35,7 +41,6 @@ class _productDetailsState extends State<productDetails> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  
                   const SizedBox(height: 20),
                   const Text("Product Detail",
                       style: TextStyle(
@@ -82,7 +87,7 @@ class _productDetailsState extends State<productDetails> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Image.network(widget.productImage??""),
+                  Image.network(widget.productImage ?? ""),
                   // Text(
                   //   "productImage: $productImage?",
                   //   style: const TextStyle(
@@ -92,34 +97,30 @@ class _productDetailsState extends State<productDetails> {
                   //   ),
                   // )
                   Row(children: [
-                  Expanded(
-                    child: TRoundedContainer(
-                      child: TextField(
-                      
-                        controller: controller,
-                        decoration: InputDecoration( 
-                          hintText: 'type your price here...'
+                    Expanded(
+                      child: TRoundedContainer(
+                        child: TextField(
+                          controller: controller,
+                          decoration: InputDecoration(
+                              hintText: 'type your price here...'),
                         ),
-                        
-                        
-                      
-                      
                       ),
                     ),
-
-                  ),
-               
-                      IconButton(onPressed: (){
-                        FirebaseFirestore.instance.collection('Bargain_Amount').add({
-                          'uid': FirebaseAuth.instance.currentUser!.uid,
-                          'productid': widget.productName,
-                          'price_propose': controller.text,
-
-                        });
-                      }, icon: Icon(Icons.send))
+                    IconButton(
+                        onPressed: () {
+                          FirebaseFirestore.instance
+                              .collection('product_requests')
+                              .add({
+                            'uid': FirebaseAuth.instance.currentUser!.uid,
+                            'productId': widget.productName,
+                            'price_propose': controller.text,
+                            'sellerId':widget.sellerId,
+                          });
+                        },
+                        icon: Icon(Icons.send))
                   ])
                   // Row(
-                  //   children: [ 
+                  //   children: [
                   //     TextField(
 
                   //     ),

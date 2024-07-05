@@ -103,7 +103,7 @@ class _ReqPageState extends State<ReqPage> {
       return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('product_requests')
-            .where('seller_id', isEqualTo: currentUser.uid)
+            .where('sellerId', isEqualTo: currentUser.uid)
             .snapshots(),
         builder: (context, requestSnapshot) {
           if (requestSnapshot.hasError) {
@@ -183,7 +183,7 @@ class _ReqPageState extends State<ReqPage> {
               return StreamBuilder<DocumentSnapshot>(
                 stream: FirebaseFirestore.instance
                     .collection('users')
-                    .doc(request['seller_id'])
+                    .doc(request['sellerId'])
                     .snapshots(),
                 builder: (context, userSnapshot) {
                   if (userSnapshot.hasError) {
