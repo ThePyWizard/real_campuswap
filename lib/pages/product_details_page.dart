@@ -3,106 +3,108 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class productDetails extends StatefulWidget {
+class ProductDetails extends StatefulWidget {
   final String? productName;
   final String? productDescription;
   final String? productPrice;
   final String? productImage;
   final String? sellerId;
+  final String? userName;
 
-  const productDetails(
-      {super.key,
-      this.productName,
-      this.productDescription,
-      this.productPrice,
-      this.productImage,
-      this.sellerId});
+  const ProductDetails({
+    Key? key,
+    this.productName,
+    this.productDescription,
+    this.productPrice,
+    this.productImage,
+    this.sellerId,
+    this.userName,
+  }) : super(key: key);
 
   @override
-  State<productDetails> createState() => _productDetailsState();
+  State<ProductDetails> createState() => _ProductDetailsState();
 }
 
-class _productDetailsState extends State<productDetails> {
+class _ProductDetailsState extends State<ProductDetails> {
   final TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Product Details'),
+        backgroundColor: Colors.blue,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 50, 20, 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Column(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Product Image
+            AspectRatio(
+              aspectRatio: 16 / 9,
+              child: Image.network(
+                widget.productImage ?? '',
+                fit: BoxFit.contain,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
-                  const Text("Product Detail",
-                      style: TextStyle(
-                          fontSize: 40,
-                          decoration: TextDecoration.none,
-                          color: Colors.black)),
-                  // const Center(
-                  //     child: Icon(Icons.favorite,
-                  //         color: Colors.black, size: 200)),
-                  // const SizedBox(height: 20),
-                  // const Text(
-                  //   "Details",
-                  //   style: TextStyle(
-                  //       fontSize: 20,
-                  //       decoration: TextDecoration.none,
-                  //       color: Colors.black),
-                  // ),
-                  const SizedBox(height: 20),
-                  const SizedBox(height: 20),
+                  // Product Name
                   Text(
-                    "${widget.productName}",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      decoration: TextDecoration.none,
-                      color: Colors.black,
-                    ),
+                    widget.productName ?? '',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 8),
+                  // Price
                   Text(
-                    "Description: ${widget.productDescription}",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      decoration: TextDecoration.none,
-                      color: Colors.black,
-                    ),
+                    'Price: ${widget.productPrice}',
+                    style: TextStyle(fontSize: 20, color: Colors.blue),
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 16),
+                  // Seller Name
                   Text(
-                    "Price:   ${widget.productPrice}",
-                    style: const TextStyle(
-                      fontSize: 20,
-                      decoration: TextDecoration.none,
-                      color: Colors.black,
-                    ),
+                    'Seller: ${widget.userName}',
+                    style: TextStyle(fontSize: 16, color: Colors.grey[600]),
                   ),
-                  const SizedBox(height: 20),
-                  Image.network(widget.productImage ?? ""),
-                  // Text(
-                  //   "productImage: $productImage?",
-                  //   style: const TextStyle(
-                  //     fontSize: 20,
-                  //     decoration: TextDecoration.none,
-                  //     color: Colors.black,
-                  //   ),
-                  // )
-                  Row(children: [
-                    Expanded(
-                      child: TRoundedContainer(
-                        child: TextField(
-                          controller: controller,
-                          decoration: InputDecoration(
-                              hintText: 'type your price here...'),
+                  SizedBox(height: 16),
+                  // Description
+                  Text(
+                    'Description',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    widget.productDescription ?? '',
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  SizedBox(height: 24),
+                  // Price Proposal
+                  Text(
+                    'Make an Offer',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TRoundedContainer(
+                          child: TextField(
+                            controller: controller,
+                            decoration: InputDecoration(
+                              hintText: 'Enter your offer...',
+                              border: InputBorder.none,
+                              prefixIcon: Icon(Icons.attach_money),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
                         ),
                       ),
-                    ),
-                    IconButton(
+                      SizedBox(width: 8),
+                      ElevatedButton(
                         onPressed: () {
                           FirebaseFirestore.instance
                               .collection('product_requests')
@@ -113,21 +115,23 @@ class _productDetailsState extends State<productDetails> {
                             'sellerId': widget.sellerId,
                             'approved': true
                           });
+                          // Show confirmation dialog or snackbar
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Offer sent successfully!')),
+                          );
                         },
-                        icon: Icon(Icons.send))
-                  ])
-                  // Row(
-                  //   children: [
-                  //     TextField(
-
-                  //     ),
-                  //     IconButton(onPressed: (){}, icon: Icon(Icons.abc))
-                  //   ],
-                  // )
+                        child: Text('Send Offer'),
+                        style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.black87, backgroundColor: Colors.blue,
+                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

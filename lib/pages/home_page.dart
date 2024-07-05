@@ -10,8 +10,6 @@ class HomePage extends StatelessWidget {
 
   Future<void> signOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-
-    // Navigate to LoginOrRegister page
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const LoginOrRegister()),
@@ -23,7 +21,10 @@ class HomePage extends StatelessWidget {
     final user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
+      backgroundColor: Colors.grey[100],
       appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.white,
         title: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
@@ -31,15 +32,18 @@ class HomePage extends StatelessWidget {
               return const CircularProgressIndicator();
             } else if (snapshot.hasData) {
               final user = snapshot.data!;
-              return Text('Hi user ${user.displayName}');
+              return Text(
+                'Welcome, ${user.displayName ?? 'User'}',
+                style: TextStyle(color: Colors.black87, fontSize: 18),
+              );
             } else {
-              return const Text('Hi user');
+              return const Text('Welcome', style: TextStyle(color: Colors.black87, fontSize: 18));
             }
           },
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: const Icon(Icons.logout, color: Colors.black87),
             onPressed: () => signOut(context),
           ),
         ],
@@ -51,87 +55,93 @@ class HomePage extends StatelessWidget {
             .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(
-              child: Text('No Products found'),
+            return Center(
+              child: Text('No Products found', style: TextStyle(fontSize: 18, color: Colors.grey[600])),
             );
           }
           return GridView.builder(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(16.0),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, // Number of columns
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 10.0,
-              childAspectRatio: 3 / 4, // Aspect ratio of the items
+              crossAxisCount: 2,
+              mainAxisSpacing: 16.0,
+              crossAxisSpacing: 16.0,
+              childAspectRatio: 0.75,
             ),
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               var product = snapshot.data!.docs[index].data();
-              return InkWell(
+              return GestureDetector(
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => productDetails(
-                        productName: snapshot.data!.docs[index]['productName'],
-                        productDescription: snapshot.data!.docs[index]['productDescription'],
-                        productPrice: snapshot.data!.docs[index]['productPrice'],
-                        productImage: snapshot.data!.docs[index]['productImage'],
-                        sellerId: snapshot.data!.docs[index]['uid'],
+                      builder: (context) => ProductDetails(
+                        productName: product['productName'],
+                        productDescription: product['productDescription'],
+                        productPrice: product['productPrice'],
+                        productImage: product['productImage'],
+                        sellerId: product['uid'],
+                        userName: product['userName'],
                       ),
                     ),
                   );
                 },
-                child: Card(
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
-                          child: Image.network(
-                            product['productImage'],
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                        child: Image.network(
+                          product['productImage'],
+                          fit: BoxFit.cover,
+                          height: 140,
+                          width: double.infinity,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          product['productName'],
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Text(
-                          product['productDescription'],
-                          style: const TextStyle(fontSize: 14),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          '₹${product['productPrice']}',
-                          style: const TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.green,
-                          ),
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              product['productName'],
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 4),
+                            Text(
+                              product['productDescription'],
+                              style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(height: 8),
+                            Text(
+                              '₹${product['productPrice']}',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green[700],
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
