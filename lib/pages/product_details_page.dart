@@ -97,7 +97,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             decoration: InputDecoration(
                               hintText: 'Enter your offer...',
                               border: InputBorder.none,
-                              prefixIcon: Icon(Icons.attach_money),
+                              prefixText: ' ₹ ',
                             ),
                             keyboardType: TextInputType.number,
                           ),
