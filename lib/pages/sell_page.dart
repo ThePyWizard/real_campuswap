@@ -53,6 +53,7 @@ class _SellPageState extends State<SellPage> {
       UploadTask uploadTask = ref.putFile(image);
       await uploadTask.whenComplete(() => print('Upload Complete'));
       String downloadURL = await ref.getDownloadURL();
+      print(downloadURL);
       setState(() {
         productImageUrl = downloadURL;
       });
@@ -68,83 +69,85 @@ class _SellPageState extends State<SellPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(TSizes.lg),
-        child: Column(
-          children: [
-                        const SizedBox(height: TSizes.productImageHeight),
-
-            const Text("Heading",
-
-                      style: TextStyle(
-                          fontSize: 40,
-                          decoration: TextDecoration.none,
-                          color: Colors.black)),
-            const SizedBox(height: TSizes.defaultSpace),
-            TRoundedContainer(
-              child: TextField(
-                controller: productNameController,
-                decoration: InputDecoration(
-                  hintText: 'Enter product name',
-                ),
-              ),
-            ),
-            const SizedBox(height: TSizes.defaultSpace),
-            TRoundedContainer(
-              child: TextField(
-                controller: productDescriptionController,
-                decoration: InputDecoration(
-                  hintText: 'Enter product description',
-                ),
-              ),
-            ),
-            const SizedBox(height: TSizes.defaultSpace),
-            TRoundedContainer(
-              child: TextField(
-                controller: productPriceController,
-                decoration: InputDecoration(
-                  hintText: 'Enter product price',
-                ),
-              ),
-            ),
-            const SizedBox(height: TSizes.defaultSpace),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: pickImage,
-                    child: const Text('Gallery'),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.all(TSizes.lg),
+          child: Column(
+            children: [
+                          const SizedBox(height: TSizes.productImageHeight),
+        
+              const Text("Product Details",
+        
+                        style: TextStyle(
+                            fontSize: 40,
+                            decoration: TextDecoration.none,
+                            color: Colors.black)),
+              const SizedBox(height: TSizes.defaultSpace),
+              TRoundedContainer(
+                child: TextField(
+                  controller: productNameController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter product name',
                   ),
                 ),
-                const SizedBox(width: TSizes.defaultSpace),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: captureImage,
-                    child: const Text('Camera'),
+              ),
+              const SizedBox(height: TSizes.defaultSpace),
+              TRoundedContainer(
+                child: TextField(
+                  controller: productDescriptionController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter product description',
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: TSizes.spaceBtwInputFields),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Product(
-                        productName: productNameController.text,
-                        productDescription: productDescriptionController.text,
-                        productPrice: productPriceController.text,
-                        productImage: productImageUrl ?? "Image",
-                      );
-                    },
-                    child: const Text('Submit'),
+              ),
+              const SizedBox(height: TSizes.defaultSpace),
+              TRoundedContainer(
+                child: TextField(
+                  controller: productPriceController,
+                  decoration: InputDecoration(
+                    hintText: 'Enter product price',
                   ),
                 ),
-              ],
-            ),
-          ],
+              ),
+              const SizedBox(height: TSizes.defaultSpace),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: pickImage,
+                      child: const Text('Gallery'),
+                    ),
+                  ),
+                  const SizedBox(width: TSizes.defaultSpace),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: captureImage,
+                      child: const Text('Camera'),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: TSizes.spaceBtwInputFields),
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Product(
+                          productName: productNameController.text,
+                          productDescription: productDescriptionController.text,
+                          productPrice: productPriceController.text,
+                          productImage: productImageUrl ?? "Image",
+                        );
+                      },
+                      child: const Text('Submit'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: BottomNav(

@@ -30,7 +30,7 @@ class HomePage extends StatelessWidget {
               return const CircularProgressIndicator();
             } else if (snapshot.hasData) {
               final user = snapshot.data!;
-              return Text('Hi user ${user.email}');
+              return Text('Hi user ${user.displayName}');
             } else {
               return const Text('Hi user');
             }

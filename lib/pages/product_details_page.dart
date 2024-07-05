@@ -12,6 +12,7 @@ class productDetails extends StatefulWidget {
   final String? productDescription;
   final String? productPrice;
   final String? productImage;
+  
   const productDetails({super.key, this.productName, this.productDescription, this.productPrice, this.productImage});
 
   @override
