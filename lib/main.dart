@@ -3,6 +3,7 @@
 import 'package:chatapp/firebase_options.dart';
 //import 'package:chatapp/pages/chat_page.dart';
 import 'package:chatapp/pages/home_page.dart';
+import 'package:chatapp/pages/myproducts.dart';
 import 'package:chatapp/pages/product_requests_page.dart';
 import 'package:chatapp/pages/sell_page.dart';
 import 'package:chatapp/services/auth/auth_gate.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/req': (context) => ReqPage(),
         '/auth': (context) => AuthGate(),
         '/profile': (context) => ProfilePage(),
+        '/myproducts': (context) => MyProducts(),
       },
       initialRoute: '/auth',
     );

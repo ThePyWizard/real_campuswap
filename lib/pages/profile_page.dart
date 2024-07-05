@@ -19,7 +19,10 @@ class ProfilePage extends StatelessWidget {
         centerTitle: true,
       ),
       body: StreamBuilder<DocumentSnapshot>(
-        stream: FirebaseFirestore.instance.collection('users').doc(user?.uid).snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('users')
+            .doc(user?.uid)
+            .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
@@ -44,13 +47,15 @@ class ProfilePage extends StatelessWidget {
                       backgroundColor: Colors.blue,
                       child: Text(
                         userData['userName']?[0].toUpperCase() ?? 'U',
-                        style: const TextStyle(fontSize: 40, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 40, color: Colors.white),
                       ),
                     ),
                     const SizedBox(height: 16),
                     Text(
                       userData['userName'] ?? 'User',
-                      style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 8),
@@ -60,9 +65,11 @@ class ProfilePage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: 24),
-                    _buildInfoCard('Campus', userData['campus'] ?? 'Not provided'),
+                    _buildInfoCard(
+                        'Campus', userData['campus'] ?? 'Not provided'),
                     const SizedBox(height: 16),
-                    _buildInfoCard('User ID', userData['uid'] ?? 'Not available'),
+                    _buildInfoCard(
+                        'User ID', userData['uid'] ?? 'Not available'),
                     const SizedBox(height: 24),
                     ElevatedButton(
                       onPressed: () {
@@ -71,14 +78,26 @@ class ProfilePage extends StatelessWidget {
                       child: const Text('Edit Profile'),
                     ),
                     const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () {
+                        // TODO: Implement your products functionality
+                        final index = 4;
+                        Navigator.pushReplacementNamed(context,
+                            ['/home', '/req', '/sell', '/profile','/myproducts'][index]);
+                      },
+                      child: const Text('Your Products'),
+                    ),
+                    const SizedBox(height: 16),
                     TextButton(
                       onPressed: () async {
-                        final authService = Provider.of<AuthService>(context, listen: false);
-                          await authService.signOut();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(builder: (context) => const LoginOrRegister()),
-                          );
+                        final authService =
+                            Provider.of<AuthService>(context, listen: false);
+                        await authService.signOut();
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginOrRegister()),
+                        );
                       },
                       child: const Text('Sign Out'),
                     ),
@@ -93,7 +112,8 @@ class ProfilePage extends StatelessWidget {
         currentIndex: 3,
         onTap: (index) {
           if (index != 3) {
-            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell','/profile'][index]);
+            Navigator.pushReplacementNamed(
+                context, ['/home', '/req', '/sell', '/profile'][index]);
           }
         },
       ),
@@ -111,7 +131,8 @@ class ProfilePage extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),

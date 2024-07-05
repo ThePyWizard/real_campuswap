@@ -242,8 +242,8 @@ class _ReqPageState extends State<ReqPage> {
       ),
       subtitle: Text(
         isSeller
-            ? "I'd buy it for $pricePropose INR"
-            : "Have a chat with the seller",
+            ? "I'd buy it for $pricePropose INR\n" "Product: $productId"
+            : "Have a chat with the seller\n" "Product: $productId",
         style: const TextStyle(
           color: Colors.grey,
         ),

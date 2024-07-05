@@ -1,11 +1,7 @@
 import 'package:chatapp/common/widgets/containers/rounded_container.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class productDetails extends StatefulWidget {
   final String? productName;
@@ -70,7 +66,7 @@ class _productDetailsState extends State<productDetails> {
                   ),
                   const SizedBox(height: 20),
                   Text(
-                    "Description: $productDetails",
+                    "Description: ${widget.productDescription}",
                     style: const TextStyle(
                       fontSize: 20,
                       decoration: TextDecoration.none,
@@ -114,7 +110,7 @@ class _productDetailsState extends State<productDetails> {
                             'uid': FirebaseAuth.instance.currentUser!.uid,
                             'productId': widget.productName,
                             'price_propose': controller.text,
-                            'sellerId':widget.sellerId,
+                            'sellerId': widget.sellerId,
                             'approved': true
                           });
                         },
