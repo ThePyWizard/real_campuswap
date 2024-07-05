@@ -20,8 +20,9 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
-      
       appBar: AppBar(
         title: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
@@ -30,15 +31,24 @@ class HomePage extends StatelessWidget {
               return const CircularProgressIndicator();
             } else if (snapshot.hasData) {
               final user = snapshot.data!;
-              return Text('Hi user ${user.email}');
+              return Text('Hi user ${user.displayName}');
             } else {
               return const Text('Hi user');
             }
           },
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () => signOut(context),
+          ),
+        ],
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection('products').snapshots(),
+        stream: FirebaseFirestore.instance
+            .collection('products')
+            .where('uid', isNotEqualTo: user?.uid)
+            .snapshots(),
         builder: (context, AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -63,19 +73,18 @@ class HomePage extends StatelessWidget {
               var product = snapshot.data!.docs[index].data();
               return InkWell(
                 onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => productDetails(
-                                      productName: snapshot.data!.docs[index]['productName'],
-                                      productDescription: snapshot.data!.docs[index]
-                                          ['productDescription'],
-                                      productPrice: snapshot.data!.docs[index]
-                                          ['productPrice'],
-                                      productImage: snapshot.data!.docs[index]
-                                          ['productImage'],
-                                    )));
-                      },
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => productDetails(
+                        productName: snapshot.data!.docs[index]['productName'],
+                        productDescription: snapshot.data!.docs[index]['productDescription'],
+                        productPrice: snapshot.data!.docs[index]['productPrice'],
+                        productImage: snapshot.data!.docs[index]['productImage'],
+                      ),
+                    ),
+                  );
+                },
                 child: Card(
                   elevation: 5,
                   shape: RoundedRectangleBorder(
@@ -116,7 +125,7 @@ class HomePage extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          '\₹${product['productPrice']}',
+                          '₹${product['productPrice']}',
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -132,12 +141,11 @@ class HomePage extends StatelessWidget {
           );
         },
       ),
-      //bottomNavigationBar: BottomNav(),
       bottomNavigationBar: BottomNav(
         currentIndex: 0,
         onTap: (index) {
           if (index != 0) {
-            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell','/profile'][index]);
+            Navigator.pushReplacementNamed(context, ['/home', '/req', '/sell', '/profile'][index]);
           }
         },
       ),
