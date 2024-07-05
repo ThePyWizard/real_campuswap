@@ -111,8 +111,8 @@ class _productDetailsState extends State<productDetails> {
                       IconButton(onPressed: (){
                         FirebaseFirestore.instance.collection('Bargain_Amount').add({
                           'uid': FirebaseAuth.instance.currentUser!.uid,
-                          'product': widget.productName,
-                          'bargainAmount': controller.text,
+                          'productid': widget.productName,
+                          'price_propose': controller.text,
 
                         });
                       }, icon: Icon(Icons.send))
