@@ -146,6 +146,17 @@ class _SellPageState extends State<SellPage> {
                   ),
                 ],
               ),
+              if (isUploading)
+                    const SizedBox(
+                        width: double.infinity,
+                        height: 50,
+                        child: Text('Uploading...',
+                            style: TextStyle(color: Colors.black))),
+                  if (productImageUrl != null)
+                    const Text(
+                      'Image uploaded successfully',
+                      style: TextStyle(color: Colors.blue),
+                    ),
             ],
           ),
         ),
