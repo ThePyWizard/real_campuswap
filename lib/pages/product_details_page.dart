@@ -115,6 +115,7 @@ class _productDetailsState extends State<productDetails> {
                             'productId': widget.productName,
                             'price_propose': controller.text,
                             'sellerId':widget.sellerId,
+                            'approved': true
                           });
                         },
                         icon: Icon(Icons.send))
